@@ -5,6 +5,8 @@ import { getChannelDetails, getSuggestedVideos, getVideoDetails } from '../Compo
 import { useDataStore } from '../Context/DataStoreContext';
 import { useState } from 'react';
 import DefaultAvatar from '../Components/Avatar';
+import ButtonGroup from '../Components/ButtonGroup';
+import Card3 from '../Components/Card3';
 
 const Watch = () => {
 	const location = useLocation();
@@ -122,6 +124,23 @@ const Watch = () => {
 		});
 	}
 
+	const largeNumberConverter = (number) => {
+		if (number < 1000) {
+			return parseFloat(number).toString();
+		} else if (number < 1000000) {
+			const rounded = parseFloat((number / 1000).toFixed(1));
+			return rounded.toString() + 'K';
+		} else if (number < 1000000000) {
+			const rounded = parseFloat((number / 1000000).toFixed(1));
+			return rounded.toString() + 'M';
+		} else {
+			const rounded = parseFloat((number / 1000000000).toFixed(1));
+			return rounded.toString() + 'B';
+		}
+	}
+
+	
+
 	return (
 		<section className='lg:mx-20 mx-5 mt-20'>
 			<div className='grid grid-cols-7 gap-4'>
@@ -139,18 +158,40 @@ const Watch = () => {
 							{videoDetailsData?.snippet.title}
 						</p>
 					</div>
-					{channelDetailsData && 
-						(
-							<div className='flex my-2 items-center'>
-								<DefaultAvatar imgSrc= {channelDetailsData.snippet.thumbnails.medium.url} />
-								<div>
-									<p className='text-sm font-bold mx-4'>{channelDetailsData.snippet.title}</p>
-									<p className='text-xs mx-4 text-gray-400'>{channelDetailsData.statistics.subscriberCount} subscribers</p>
+
+					<div className='flex my-2'>
+						{channelDetailsData && 
+							(
+								<div className='flex items-center w-full'>
+									<DefaultAvatar imgSrc= {channelDetailsData.snippet.thumbnails.medium.url} />
+									<div>
+										<p className='text-sm font-bold mx-4'>{channelDetailsData.snippet.title}</p>
+										<p className='text-xs mx-4 text-gray-400'>{largeNumberConverter(channelDetailsData.statistics.subscriberCount)} subscribers</p>
+									</div>
+
 								</div>
-							</div>
-						)
-					}
+							)
+						}
+						<div className='flex justify-end w-full' >
+							<ButtonGroup likes={largeNumberConverter(videoDetailsData?.statistics.likeCount)} />
+						</div>
+					</div>
+
+					<div className='my-8'>
+						<Card3 views={largeNumberConverter(videoDetailsData?.statistics.viewCount)} dateUpload={videoDetailsData?.snippet.publishedAt} description={videoDetailsData?.snippet.description}/>
+					</div>
+
+					<div className='my-4'>
+						<p className='font-normal break-words text-gray-700 dark:text-gray-400'>
+							{videoDetailsData?.statistics.commentCount} comments
+						</p>
+
+						
+					</div>
+
 				</div>
+
+
 				<div className='col-span-2'>
 					{resultDataList &&
 						(
@@ -158,6 +199,8 @@ const Watch = () => {
 						)
 					}
 				</div>
+
+
 			</div>
 		</section>
 	);
