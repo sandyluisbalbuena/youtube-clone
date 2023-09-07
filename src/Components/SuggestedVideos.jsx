@@ -9,9 +9,9 @@ export default function SuggestedVideos() {
   	const { resultDataList } = useDataStore(); // Access the resultData from the context
 	const navigate = useNavigate();
 
-	useEffect(() => {
+	// useEffect(() => {
 
-		console.log(resultDataList);
+		// console.log(resultDataList);
 		// if(props.random == 'random'){
 		// 	let url = 'https://youtube-v31.p.rapidapi.com/search';
 		// 	let query = 'dota2 Rizpol';
@@ -35,7 +35,7 @@ export default function SuggestedVideos() {
 		// 		console.error(error);
 		// 	});
 		// }
-	}, [])
+	// }, [])
 	
 	const handleClick = (videoId) => {
 		// Construct the URL with the videoId parameter

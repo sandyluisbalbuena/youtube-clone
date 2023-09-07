@@ -3,13 +3,14 @@ import axios from 'axios';
 export async function getVideos(query, url) {
 
 	let errorNum = 0;
-	let  key = '';
+	let  key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// let  key = '';
 
-	if(errorNum == 0){
-		key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
-	}else{
-		key = '0e8a04a066msh67389fb59f77d70p1dd2d2jsnb981f0d517fb';
-	}
+	// if(errorNum == 0){
+	// 	key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
+	// }else{
+	// 	key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// }
 
 	const options = {
 		method: 'GET',
@@ -41,13 +42,14 @@ export async function getVideos(query, url) {
 export async function getVideoDetails(videoId) {
 
 	let errorNum = 0;
-	let  key = '';
+	let  key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// let  key = '';
 
-	if(errorNum == 0){
-		key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
-	}else{
-		key = '0e8a04a066msh67389fb59f77d70p1dd2d2jsnb981f0d517fb';
-	}
+	// if(errorNum == 0){
+	// 	key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
+	// }else{
+	// 	key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// }
 	
 	const options = {
 		method: 'GET',
@@ -72,16 +74,53 @@ export async function getVideoDetails(videoId) {
 	}
 }
 
+export async function getVideoComments(videoId) {
+
+	let errorNum = 0;
+	let  key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// let  key = '';
+
+	// if(errorNum == 0){
+	// 	key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
+	// }else{
+	// 	key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// }
+	
+	const options = {
+		method: 'GET',
+		url: 'https://youtube-v31.p.rapidapi.com/commentThreads',
+		params: {
+			part: 'snippet,statistics',
+			videoId: videoId,
+			maxResults: '100'
+		},
+		headers: {
+			'X-RapidAPI-Key': key,
+			'X-RapidAPI-Host': 'youtube-v31.p.rapidapi.com'
+		}
+	};
+
+	try {
+		const response = await axios.request(options);
+		return response.data;
+	} catch (error) {
+		console.error(error);
+		errorNum++;
+		throw error; 
+	}
+}
+
 export async function getChannelDetails(channelId) {
 
 	let errorNum = 0;
-	let  key = '';
+	let  key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// let  key = '';
 
-	if(errorNum == 0){
-		key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
-	}else{
-		key = '0e8a04a066msh67389fb59f77d70p1dd2d2jsnb981f0d517fb';
-	}
+	// if(errorNum == 0){
+	// 	key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
+	// }else{
+	// 	key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// }
 	
 	const options = {
 		method: 'GET',
@@ -110,13 +149,14 @@ export async function getChannelDetails(channelId) {
 export async function getSuggestedVideos(videoId) {
 
 	let errorNum = 0;
-	let  key = '';
+	let  key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// let  key = '';
 
-	if(errorNum == 0){
-		key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
-	}else{
-		key = '0e8a04a066msh67389fb59f77d70p1dd2d2jsnb981f0d517fb';
-	}
+	// if(errorNum == 0){
+	// 	key = 'f293597e7dmsh66104292b3eccfcp16db32jsnd523df679fcf';
+	// }else{
+	// 	key = 'cd9ed30d87mshe2c223498b2e25bp14f68fjsn96bfaad8ee3b';
+	// }
 	
 	const options = {
 		method: 'GET',

@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import SuggestedVideos from '../Components/SuggestedVideos';
-import { getChannelDetails, getSuggestedVideos, getVideoDetails } from '../Components/AxiosRequest';
+import { getChannelDetails, getSuggestedVideos, getVideoComments, getVideoDetails } from '../Components/AxiosRequest';
 import { useDataStore } from '../Context/DataStoreContext';
 import { useState } from 'react';
 import DefaultAvatar from '../Components/Avatar';
 import ButtonGroup from '../Components/ButtonGroup';
 import Card3 from '../Components/Card3';
+import Comments from '../Components/Comments';
 
 const Watch = () => {
 	const location = useLocation();
@@ -15,7 +16,7 @@ const Watch = () => {
 	const [videoDetailsData, setVideoDetailsData] = useState(null);
 	const [channelDetailsData, setChannelDetailsData] = useState(null);
 	const [videoId, setVideoId] = useState(null);
-	const [suggestedVideosData, setSuggestedVideosData] = useState(null);
+	const [commentsData, setCommentsData] = useState(null);
 
 	const getVideoId = () => {
 		setVideoId(new URLSearchParams(location.search).get('v'));
@@ -28,6 +29,7 @@ const Watch = () => {
 
 		if (videoId) {
 			videoDetails(videoId);
+			videoComments(videoId);
 			suggestedVideos(videoId);
 			// Load YouTube player
 			// const loadYouTubeVideo = () => {
@@ -93,9 +95,22 @@ const Watch = () => {
 	const videoDetails = (videoId) => {
 		getVideoDetails(videoId)
 		.then((data) => {
-			console.log('video  ',data)
+			// console.log('video  ',data)
 			setVideoDetailsData(data.items[0]);
 			channelDetails(data.items[0].snippet.channelId)
+		})
+		.catch((error) => {
+			console.error(error);
+		});
+	}
+
+	const videoComments = (videoId) => {
+		getVideoComments(videoId)
+		.then((data) => {
+			console.log('comments  ',data)
+			setCommentsData(data.items);
+			// setVideoDetailsData(data.items[0]);
+			// channelDetails(data.items[0].snippet.channelId)
 		})
 		.catch((error) => {
 			console.error(error);
@@ -117,7 +132,7 @@ const Watch = () => {
 		getSuggestedVideos(videoId)
 		.then((data) => {
 			setResultDataList(data.items);
-			console.log('Suggested Videos: ', data.items);
+			// console.log('Suggested Videos: ', data.items);
 		})
 		.catch((error) => {
 			console.error(error);
@@ -185,8 +200,9 @@ const Watch = () => {
 						<p className='font-normal break-words text-gray-700 dark:text-gray-400'>
 							{videoDetailsData?.statistics.commentCount} comments
 						</p>
-
-						
+						<div className='my-5'>
+							{commentsData && <Comments commentsData={commentsData}/>}
+						</div>
 					</div>
 
 				</div>

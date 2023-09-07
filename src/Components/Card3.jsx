@@ -49,20 +49,24 @@ export default function Card3({views, dateUpload, description}) {
 				{views} views {calculateAge(dateUpload)} ago
 				</p>
 			</h5>
-			<p className={`font-normal break-words text-gray-700 dark:text-gray-400 ${isExpanded ? 'block' : 'truncate'}`}>
+			<p className={`text-xs font-normal break-words text-gray-700 dark:text-gray-400 ${isExpanded ? 'block' : 'truncate'}`}>
 				{description}
 			</p>
 			<button
 				onClick={toggleExpand}
 				className={`justify-end flex ${isExpanded ? 'block' : 'hidden'}`}
 			>
-				Show Less
+				<p className='text-xs'>
+					Show Less
+				</p>
 			</button>
 			<button
 				onClick={toggleExpand}
 				className={`justify-end flex ${isExpanded ? 'hidden' : 'block'}`}
 			>
-				...more
+				<p className='text-xs'>
+					...more
+				</p>
 			</button>
 		</Card>
 	)
