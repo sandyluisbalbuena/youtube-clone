@@ -11,9 +11,9 @@ import Comments from '../Components/Comments';
 
 const Watch = () => {
 	const location = useLocation();
-	const { resultDataList, setResultDataList } = useDataStore();
+	const { resultDataList, setResultDataList, videoDetailsData, setVideoDetailsData } = useDataStore();
 
-	const [videoDetailsData, setVideoDetailsData] = useState(null);
+	// const [videoDetailsData, setVideoDetailsData] = useState(null);
 	const [channelDetailsData, setChannelDetailsData] = useState(null);
 	const [videoId, setVideoId] = useState(null);
 	const [commentsData, setCommentsData] = useState(null);
@@ -22,67 +22,31 @@ const Watch = () => {
 		setVideoId(new URLSearchParams(location.search).get('v'));
 	}
 
-	useEffect(() => {
+	const getOthers = (videoId) => {
+		videoComments(videoId);
+		suggestedVideos(videoId);
+		videoDetails(videoId);
+	}
+
+	const init = () => {
 		getVideoId();
+
+
+		if (videoId) {
+			getOthers(videoId);
+		}
+	}
+
+	useEffect(() => {
+		init();
 		// console.log(videoId);
 		// let player;
 
-		if (videoId) {
-			videoDetails(videoId);
-			videoComments(videoId);
-			suggestedVideos(videoId);
-			// Load YouTube player
-			// const loadYouTubeVideo = () => {
-			// 	// 1. Create a <div> element to hold the YouTube player
-			// 	const playerDiv = document.createElement('div');
-			// 	playerDiv.classList.add('w-full', 'rounded-lg');
-			// 	playerDiv.id = 'youtube-player';
-			// 	document.querySelector('.iframe').appendChild(playerDiv);
-			// 	// 2. Load the YouTube IFrame Player API asynchronously
-			// 	const tag = document.createElement('script');
-			// 	tag.src = 'https://www.youtube.com/iframe_api';
-			// 	const firstScriptTag = document.getElementsByTagName('script')[0];
-			// 	firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-			// 	// 3. Create the YouTube player after the API code downloads
-			// 	window.onYouTubeIframeAPIReady = function () {
+		
 
-			// 		setTimeout(() => {
-			// 			player = new window.YT.Player('youtube-player', {
-			// 				height: '545',
-			// 				videoId: videoId,
-			// 				playerVars: {
-			// 				playsinline: 1,
-			// 				},
-			// 				events: {
-			// 				onReady: onPlayerReady,
-			// 				onStateChange: onPlayerStateChange,
-			// 				},
-			// 			});
-			// 		}, 500);
-					
-			// 	};
-			// 	// 4. The API will call this function when the video player is ready.
-			// 	function onPlayerReady(event) {
-			// 		event.target.playVideo();
-			// 	}
-			// 	// 5. The API calls this function when the player's state changes.
-			// 	// You can add your custom logic here.
-			// 	function onPlayerStateChange(event) {
-			// 		if (event.data === window.YT.PlayerState.PLAYING && !done) {
-			// 			// setTimeout(stopVideo, 6000);
-			// 			done = true;
-			// 		}
-			// 	}
-		
-			// 	// 6. Function to stop the video
-			// 	let done = false;
-			// 	function stopVideo() {
-			// 		player.stopVideo();
-			// 	}
-			// };
-		
-			// loadYouTubeVideo();
-		}
+		// if (videoId) {
+		// 	getOthers(videoId);
+		// }
 
 		// return () => {
 		// 	if (player) {
@@ -92,12 +56,14 @@ const Watch = () => {
 
 	}, [videoId]);
 
+	
+
 	const videoDetails = (videoId) => {
 		getVideoDetails(videoId)
 		.then((data) => {
 			// console.log('video  ',data)
 			setVideoDetailsData(data.items[0]);
-			channelDetails(data.items[0].snippet.channelId)
+			// channelDetails(data.items[0].snippet.channelId)
 		})
 		.catch((error) => {
 			console.error(error);
@@ -183,7 +149,6 @@ const Watch = () => {
 										<p className='text-sm font-bold mx-4'>{channelDetailsData.snippet.title}</p>
 										<p className='text-xs mx-4 text-gray-400'>{largeNumberConverter(channelDetailsData.statistics.subscriberCount)} subscribers</p>
 									</div>
-
 								</div>
 							)
 						}
@@ -211,7 +176,7 @@ const Watch = () => {
 				<div className='col-span-2'>
 					{resultDataList &&
 						(
-							<SuggestedVideos />
+							<SuggestedVideos init={init}/>
 						)
 					}
 				</div>

@@ -5,7 +5,7 @@ import { getVideos } from './AxiosRequest';
 import { useNavigate } from 'react-router-dom';
 import Card2 from './Card2';
 
-export default function SuggestedVideos() {
+export default function SuggestedVideos({init}) {
   	const { resultDataList } = useDataStore(); // Access the resultData from the context
 	const navigate = useNavigate();
 
@@ -41,6 +41,7 @@ export default function SuggestedVideos() {
 		// Construct the URL with the videoId parameter
 		const url = `/watch?v=${videoId}`;
 		navigate(url);
+		init();
 	}
 
 	return (

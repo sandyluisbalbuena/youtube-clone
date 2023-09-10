@@ -5,9 +5,10 @@ const DataStoreContext = createContext();
 export function DataStoreProvider({ children }) {
 	const [resultData, setResultData] = useState(null);
 	const [resultDataList, setResultDataList] = useState(null);
+	const [videoDetailsData, setVideoDetailsData] = useState(null);
 
 	return (
-		<DataStoreContext.Provider value={{ resultData, setResultData, resultDataList, setResultDataList }}>
+		<DataStoreContext.Provider value={{ resultData, setResultData, resultDataList, setResultDataList, videoDetailsData, setVideoDetailsData }}>
 		{children}
 		</DataStoreContext.Provider>
 	);
